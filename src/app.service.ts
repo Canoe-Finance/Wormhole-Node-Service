@@ -1,5 +1,5 @@
 import { ixFromRust, uint8ArrayToHex } from '@certusone/wormhole-sdk';
-import { importTokenWasm } from '@certusone/wormhole-sdk-wasm';
+import { importTokenWasm, setDefaultWasm } from '@certusone/wormhole-sdk-wasm';
 import { HttpException, HttpStatus, Injectable } from '@nestjs/common';
 import { createApproveInstruction, getAssociatedTokenAddress } from '@solana/spl-token';
 import { Keypair, PublicKey, Transaction } from '@solana/web3.js';
@@ -23,6 +23,8 @@ export class AppService {
     }
 
     const fromAddress = await getAssociatedTokenAddress(new PublicKey(data.mint), new PublicKey(data.userPublicKey));
+
+    setDefaultWasm('node');
 
     const transferIx = await getBridgeFeeIx(data.userPublicKey);
     console.log(transferIx);
