@@ -3,7 +3,7 @@ import { importTokenWasm, setDefaultWasm } from '@certusone/wormhole-sdk-wasm';
 import { HttpException, HttpStatus, Injectable } from '@nestjs/common';
 import { createApproveInstruction, getAssociatedTokenAddress } from '@solana/spl-token';
 import { Keypair, PublicKey, Transaction } from '@solana/web3.js';
-import { zeroPad } from 'ethers/lib/utils';
+import { arrayify, zeroPad } from 'ethers/lib/utils';
 import { AppDto } from './app.dto';
 import { connection, SOL_BRIDGE_ADDRESS, SOL_TOKEN_BRIDGE_ADDRESS } from './constants';
 import { createNonce, getBridgeFeeIx } from './utils';
@@ -27,7 +27,6 @@ export class AppService {
     setDefaultWasm('node');
 
     const transferIx = await getBridgeFeeIx(data.userPublicKey);
-    console.log(transferIx);
 
     const nonce = createNonce().readUInt32LE(0);
     const { transfer_native_ix, approval_authority_address } = await importTokenWasm();
@@ -39,9 +38,8 @@ export class AppService {
     );
     const messageKey = Keypair.generate();
 
-    const targetAddress = zeroPad(new PublicKey(data.targetAddress).toBytes(), 32);
-    console.log(uint8ArrayToHex(targetAddress));
-    console.log(targetAddress);
+    const targetAddress = zeroPad(arrayify(data.targetAddress), 32);
+
     const ix = ixFromRust(
       transfer_native_ix(
         SOL_TOKEN_BRIDGE_ADDRESS,
