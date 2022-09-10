@@ -1,13 +1,15 @@
-import { IsNumberString, IsString, Length, Matches } from 'class-validator';
+import { IsNumberString, IsString, Length, Matches, MaxLength, MinLength } from 'class-validator';
 
 export class AppDto {
   @IsString()
-  @Length(44)
+  @MinLength(43)
+  @MaxLength(44)
   // user wallet publickey
   userPublicKey: string;
 
   @IsString()
-  @Length(44)
+  @MinLength(43)
+  @MaxLength(44)
   // cross chain token address
   mint: string;
 
