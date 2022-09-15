@@ -7,6 +7,7 @@
 ```bash
 {
  "userPublicKey": "[wallet publicKey]",
+ "messagePublicKey": "[Randomly generate accounts]",
  "mint": "[token address]",
  "targetAddress": "[eth address]",
  "amount": "[cross-chain amount]"

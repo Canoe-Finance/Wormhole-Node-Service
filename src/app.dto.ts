@@ -4,22 +4,28 @@ export class AppDto {
   @IsString()
   @MinLength(43)
   @MaxLength(44)
-  // user wallet publickey
+  // User wallet publickey
   userPublicKey: string;
 
   @IsString()
   @MinLength(43)
   @MaxLength(44)
-  // cross chain token address
+  // Randomly generate accounts
+  messagePublicKey: string;
+
+  @IsString()
+  @MinLength(43)
+  @MaxLength(44)
+  // Cross chain token address
   mint: string;
 
   @IsString()
   @Length(42)
   @Matches(/^0x[a-fA-F0-9]{40}$/)
-  // cross chain target recipient eth address
+  // Cross chain target recipient eth address
   targetAddress: string;
 
   @IsNumberString()
-  // cross chain amount
+  // Cross chain amount
   amount: string;
 }

@@ -1,8 +1,8 @@
-import { ixFromRust, uint8ArrayToHex } from '@certusone/wormhole-sdk';
+import { ixFromRust } from '@certusone/wormhole-sdk';
 import { importTokenWasm, setDefaultWasm } from '@certusone/wormhole-sdk-wasm';
 import { HttpException, HttpStatus, Injectable } from '@nestjs/common';
 import { createApproveInstruction, getAssociatedTokenAddress } from '@solana/spl-token';
-import { Keypair, PublicKey, Transaction } from '@solana/web3.js';
+import { PublicKey, Transaction } from '@solana/web3.js';
 import { arrayify, zeroPad } from 'ethers/lib/utils';
 import { AppDto } from './app.dto';
 import { connection, SOL_BRIDGE_ADDRESS, SOL_TOKEN_BRIDGE_ADDRESS } from './constants';
@@ -36,7 +36,6 @@ export class AppService {
       new PublicKey(data.userPublicKey),
       BigInt(data.amount)
     );
-    const messageKey = Keypair.generate();
 
     const targetAddress = zeroPad(arrayify(data.targetAddress), 32);
 
@@ -45,14 +44,14 @@ export class AppService {
         SOL_TOKEN_BRIDGE_ADDRESS,
         SOL_BRIDGE_ADDRESS,
         data.userPublicKey,
-        messageKey.publicKey.toString(),
+        data.messagePublicKey,
         fromAddress.toBase58(),
         data.mint,
         nonce,
         BigInt(data.amount),
         BigInt(0),
         targetAddress,
-        1
+        2
       )
     );
 
@@ -60,7 +59,6 @@ export class AppService {
     const { blockhash } = await connection.getLatestBlockhash();
     transaction.recentBlockhash = blockhash;
     transaction.feePayer = new PublicKey(data.userPublicKey);
-    transaction.partialSign(messageKey);
     return transaction;
   }
 }
