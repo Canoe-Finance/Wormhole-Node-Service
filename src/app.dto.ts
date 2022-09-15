@@ -10,12 +10,6 @@ export class AppDto {
   @IsString()
   @MinLength(43)
   @MaxLength(44)
-  // Randomly generate accounts
-  messagePublicKey: string;
-
-  @IsString()
-  @MinLength(43)
-  @MaxLength(44)
   // Cross chain token address
   mint: string;
 
