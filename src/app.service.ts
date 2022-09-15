@@ -5,7 +5,7 @@ import { createApproveInstruction, getAssociatedTokenAddress } from '@solana/spl
 import { PublicKey, Transaction } from '@solana/web3.js';
 import { arrayify, zeroPad } from 'ethers/lib/utils';
 import { AppDto } from './app.dto';
-import { SOL_BRIDGE_ADDRESS, SOL_TOKEN_BRIDGE_ADDRESS } from './constants';
+import { connection, SOL_BRIDGE_ADDRESS, SOL_TOKEN_BRIDGE_ADDRESS } from './constants';
 import { createNonce, getBridgeFeeIx } from './utils';
 
 @Injectable()
@@ -56,9 +56,9 @@ export class AppService {
     );
 
     const transaction = new Transaction().add(transferIx, approvalIx, ix);
-    // const { blockhash } = await connection.getLatestBlockhash();
-    // transaction.recentBlockhash = blockhash;
-    // transaction.feePayer = new PublicKey(data.userPublicKey);
+    const { blockhash } = await connection.getLatestBlockhash();
+    transaction.recentBlockhash = blockhash;
+    transaction.feePayer = new PublicKey(data.userPublicKey);
     return transaction;
   }
 }
