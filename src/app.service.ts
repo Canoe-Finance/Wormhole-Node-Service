@@ -10,7 +10,7 @@ import { createNonce, getBridgeFeeIx } from './utils';
 
 @Injectable()
 export class AppService {
-  async buildTx(data: AppDto): Promise<Transaction> {
+  async buildTx(data: AppDto): Promise<Buffer> {
     // check payerAddress address
     try {
       const mintPublicKey = new PublicKey(data.mint);
@@ -62,6 +62,6 @@ export class AppService {
     transaction.feePayer = new PublicKey(data.userPublicKey);
     transaction.partialSign(messageKey);
 
-    return transaction;
+    return transaction.serialize();
   }
 }

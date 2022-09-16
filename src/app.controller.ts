@@ -1,5 +1,4 @@
 import { Controller, Post, Body, UsePipes, ValidationPipe, Get } from '@nestjs/common';
-import { Transaction } from '@solana/web3.js';
 import { AppDto } from './app.dto';
 import { AppService } from './app.service';
 
@@ -9,7 +8,7 @@ export class AppController {
 
   @UsePipes(new ValidationPipe())
   @Post()
-  buildTx(@Body() body: AppDto): Promise<Transaction> {
+  buildTx(@Body() body: AppDto): Promise<Buffer> {
     return this.appService.buildTx(body);
   }
 
