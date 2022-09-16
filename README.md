@@ -1,7 +1,5 @@
 # Canoe cross-chain back-end
 
-## Description
-
 ### Resquest
 
 ```bash
