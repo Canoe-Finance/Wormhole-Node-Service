@@ -1,4 +1,4 @@
-# Canoe cross-chain black-end base on wormhole
+# Canoe cross-chain back-end
 
 ## Description
 
@@ -19,7 +19,7 @@
 
 ### How to use the front end
 
-```bash
+```js
 // serializedTransaction: api response
 const transaction = Transaction.from(Buffer.from(serializedTransaction, 'base64'))
 // send transaction
