@@ -63,6 +63,6 @@ export class AppService {
     transaction.feePayer = new PublicKey(data.userPublicKey);
     transaction.partialSign(messageKey);
 
-    return transaction.serializeMessage().toString('base64');
+    return transaction.serialize({ verifySignatures: false }).toString('base64');
   }
 }
