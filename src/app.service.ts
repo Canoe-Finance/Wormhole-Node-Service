@@ -1,3 +1,4 @@
+import bs58 from 'bs58';
 import { ixFromRust } from '@certusone/wormhole-sdk';
 import { importTokenWasm, setDefaultWasm } from '@certusone/wormhole-sdk-wasm';
 import { HttpException, HttpStatus, Injectable } from '@nestjs/common';
@@ -10,7 +11,7 @@ import { createNonce, getBridgeFeeIx } from './utils';
 
 @Injectable()
 export class AppService {
-  async buildTx(data: AppDto): Promise<Buffer> {
+  async buildTx(data: AppDto) {
     // check payerAddress address
     try {
       const mintPublicKey = new PublicKey(data.mint);
@@ -62,6 +63,6 @@ export class AppService {
     transaction.feePayer = new PublicKey(data.userPublicKey);
     transaction.partialSign(messageKey);
 
-    return transaction.serialize();
+    return transaction.serializeMessage().toString('base64');
   }
 }

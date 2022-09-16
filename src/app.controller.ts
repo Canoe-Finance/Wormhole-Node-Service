@@ -8,7 +8,7 @@ export class AppController {
 
   @UsePipes(new ValidationPipe())
   @Post()
-  buildTx(@Body() body: AppDto): Promise<Buffer> {
+  buildTx(@Body() body: AppDto) {
     return this.appService.buildTx(body);
   }
 
