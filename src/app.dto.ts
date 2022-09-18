@@ -1,4 +1,4 @@
-import { IsNumberString, IsString, Length, Matches, MaxLength, MinLength } from 'class-validator';
+import { IsNumberString, IsOptional, IsString, Length, Matches, MaxLength, MinLength } from "class-validator";
 
 export class AppDto {
   @IsString()
@@ -6,6 +6,13 @@ export class AppDto {
   @MaxLength(44)
   // User wallet publickey
   userPublicKey: string;
+
+  /**
+   * optional: message address, will create one if not set
+   */
+  @IsString()
+  @IsOptional()
+  messageAddress?: string;
 
   @IsString()
   @MinLength(43)
