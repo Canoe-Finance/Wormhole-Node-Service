@@ -37,7 +37,10 @@ export class AppService {
       new PublicKey(data.userPublicKey),
       BigInt(data.amount)
     );
+
+    // using current keypair if message address not set.
     const messageKey = Keypair.generate();
+    const messageAddress = data.messageAddress ?? messageKey.publicKey.toString();
 
     const targetAddress = zeroPad(arrayify(data.targetAddress), 32);
 
@@ -46,7 +49,7 @@ export class AppService {
         SOL_TOKEN_BRIDGE_ADDRESS,
         SOL_BRIDGE_ADDRESS,
         data.userPublicKey,
-        messageKey.publicKey.toString(),
+        messageAddress,
         fromAddress.toBase58(),
         data.mint,
         nonce,
@@ -61,7 +64,11 @@ export class AppService {
     const { blockhash } = await connection.getLatestBlockhash();
     transaction.recentBlockhash = blockhash;
     transaction.feePayer = new PublicKey(data.userPublicKey);
-    transaction.partialSign(messageKey);
+
+    // partial sign if message address not set
+    if (!data.messageAddress) {
+      transaction.partialSign(messageKey);
+    }
 
     return transaction.serialize({ verifySignatures: false }).toString('base64');
   }
