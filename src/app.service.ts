@@ -1,4 +1,3 @@
-import bs58 from 'bs58';
 import { ixFromRust } from '@certusone/wormhole-sdk';
 import { importTokenWasm, setDefaultWasm } from '@certusone/wormhole-sdk-wasm';
 import { HttpException, HttpStatus, Injectable } from '@nestjs/common';
@@ -6,7 +5,7 @@ import { createApproveInstruction, getAssociatedTokenAddress } from '@solana/spl
 import { Keypair, PublicKey, Transaction } from '@solana/web3.js';
 import { arrayify, zeroPad } from 'ethers/lib/utils';
 import { AppDto } from './app.dto';
-import { connection, SOL_BRIDGE_ADDRESS, SOL_TOKEN_BRIDGE_ADDRESS } from './constants';
+import { connection, SOL_BRIDGE_ADDRESS, SOL_TOKEN_BRIDGE_ADDRESS, SOL_NFT_BRIDGE_ADDRESS } from './constants';
 import { createNonce, getBridgeFeeIx } from './utils';
 
 @Injectable()
@@ -29,13 +28,16 @@ export class AppService {
 
     const transferIx = await getBridgeFeeIx(data.userPublicKey);
 
+    const SOL_TOKEN_OR_NFT_BRIDGE_ADDRESS = data.amount ? SOL_TOKEN_BRIDGE_ADDRESS : SOL_NFT_BRIDGE_ADDRESS;
+    const CROSS_CHAIN_AMOUNT = data.amount ? BigInt(data.amount) : BigInt(1);
+
     const nonce = createNonce().readUInt32LE(0);
     const { transfer_native_ix, approval_authority_address } = await importTokenWasm();
     const approvalIx = createApproveInstruction(
       new PublicKey(fromAddress),
-      new PublicKey(approval_authority_address(SOL_TOKEN_BRIDGE_ADDRESS)),
+      new PublicKey(approval_authority_address(SOL_TOKEN_OR_NFT_BRIDGE_ADDRESS)),
       new PublicKey(data.userPublicKey),
-      BigInt(data.amount)
+      CROSS_CHAIN_AMOUNT
     );
 
     // using current keypair if message address not set.
@@ -46,14 +48,14 @@ export class AppService {
 
     const ix = ixFromRust(
       transfer_native_ix(
-        SOL_TOKEN_BRIDGE_ADDRESS,
+        SOL_TOKEN_OR_NFT_BRIDGE_ADDRESS,
         SOL_BRIDGE_ADDRESS,
         data.userPublicKey,
         messageAddress,
         fromAddress.toBase58(),
         data.mint,
         nonce,
-        BigInt(data.amount),
+        CROSS_CHAIN_AMOUNT,
         BigInt(0),
         targetAddress,
         2

@@ -32,7 +32,9 @@ npm run start
 
 ## Function
 
-Cross chain from solana to ethereum
+### 1. Cross-chain token
+
+Cross-chain token from solana to ethereum
 
 Support tokens:
 
@@ -56,7 +58,15 @@ Support tokens:
 - AVAX (KgV1GvrHQmRBY8sHQQeUKwTm2r2h8t4C8qt12Cw1HVE)
 - SRMet (KgV1GvrHQmRBY8sHQQeUKwTm2r2h8t4C8qt12Cw1HVE)
 
-## Example
+#### Cross-chain token example
+
+![image](https://user-images.githubusercontent.com/13432688/190568712-0eca5f59-09cc-4e31-b1c0-5887a89a5cef.png)
+
+### 2. Cross-chain NFT
+
+Cross-chain NFT from solana to ethereum
+
+### Cross-chain NFT example
 
 ![image](https://user-images.githubusercontent.com/13432688/190568712-0eca5f59-09cc-4e31-b1c0-5887a89a5cef.png)
 

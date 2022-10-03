@@ -1,4 +1,4 @@
-import { IsNumberString, IsOptional, IsString, Length, Matches, MaxLength, MinLength } from "class-validator";
+import { IsNumberString, IsOptional, IsString, Length, Matches, MaxLength, MinLength } from 'class-validator';
 
 export class AppDto {
   @IsString()
@@ -27,6 +27,7 @@ export class AppDto {
   targetAddress: string;
 
   @IsNumberString()
+  @IsOptional()
   // Cross chain amount
   amount: string;
 }
