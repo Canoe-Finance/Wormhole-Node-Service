@@ -32,7 +32,7 @@ npm run start
  "mint": "[token address]",
  "messageAddress": "[optional address]"
  "targetAddress": "[eth address]",
- "amount": "[cross-chain amount]"
+ "amount": "[optional cross-chain amount, if not input, it's cross-chain NFT]"
 }
 ```
 
@@ -74,7 +74,7 @@ Cross-chain NFT from solana to ethereum
 
 ### Cross-chain NFT example
 
-![image](https://user-images.githubusercontent.com/13432688/190568712-0eca5f59-09cc-4e31-b1c0-5887a89a5cef.png)
+![image](https://user-images.githubusercontent.com/13432688/193602553-6343956a-b940-49aa-9f7f-e03c4d234c1a.png)
 
 ## How to use the front end
 
