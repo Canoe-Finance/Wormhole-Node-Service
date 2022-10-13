@@ -1,5 +1,11 @@
 # Canoe cross-chain back-end
 
+## Introduction
+
+The back-end node service using wormhole sdk.
+
+Cross chain operations can be performed across platforms [Flutter, Unity, ...].
+
 ## Clone canoe wormhole node
 
 ```bash
