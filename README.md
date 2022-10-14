@@ -4,7 +4,7 @@
 
 The back-end node service using wormhole sdk.
 
-Cross chain operations can be performed across platforms [Flutter, Unity, ...].
+Cross chain operations can be performed across platforms [Flutter, Unity, etc...]
 
 ## Clone canoe wormhole node
 
